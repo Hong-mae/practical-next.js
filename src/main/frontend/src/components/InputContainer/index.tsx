@@ -1,22 +1,21 @@
 import { ShowInputButton } from 'components/ShowInputButton';
-import { ToDoInput } from 'components/ToDoInput';
+import { ToDoInput } from 'pages/ToDoInput';
 import React, { useState } from 'react';
 
 interface Props {
   readonly onAdd: (toDo: string) => void;
 }
 
-export const InputContainer = ({ onAdd }: Props) => {
+export const InputContainer = () => {
   const [showToDoInput, setShowToDoInput] = useState(false);
 
-  const onAddToDo = (toDo: string) => {
-    onAdd(toDo);
+  const onClose = () => {
     setShowToDoInput(false);
   };
 
   return (
     <>
-      {showToDoInput && <ToDoInput onAdd={onAddToDo} />}
+      {showToDoInput && <ToDoInput />}
       <ShowInputButton show={showToDoInput} onClick={() => setShowToDoInput(!showToDoInput)} />
     </>
   );

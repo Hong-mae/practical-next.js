@@ -1,18 +1,17 @@
+import { ShowInputButton } from 'components/ShowInputButton';
 import { Title } from 'components/Title';
 import { ToDoList } from 'components/ToDoList';
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import styled from 'styled-components';
 
-interface Props {
-  readonly toDoList: ReadonlyArray<string>;
-  readonly onDelete?: (todo: string) => void;
-}
-
-export const DataView = ({ toDoList, onDelete }: Props) => {
+export const DataView = () => {
+  const navigator = useNavigate();
   return (
     <Container>
       <Title text="할 일 목록" />
-      <ToDoList toDoList={toDoList} onDelete={onDelete} />
+      <ToDoList />
+      <ShowInputButton show={false} onClick={() => navigator('/add')} />
     </Container>
   );
 };

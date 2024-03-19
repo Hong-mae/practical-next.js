@@ -1,0 +1,28 @@
+import React from 'react';
+import { Link } from 'react-router-dom';
+import styled from 'styled-components';
+
+export const Header = () => {
+  return (
+    <Container>
+      <StyledLink to="/">할 일 목록 앱</StyledLink>
+    </Container>
+  );
+};
+
+const Container = styled.div`
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  text-align: center;
+  background-color: #304ffe;
+  padding: 8px 0;
+  margin: 0;
+`;
+
+const StyledLink = styled(Link)`
+  color: #fff;
+  font-size: 20px;
+  text-decoration: none;
+`;
