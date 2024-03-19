@@ -1,72 +1,33 @@
-import { useState } from 'react';
 import styled from 'styled-components';
-import { Button, Input, ToDoItem } from 'components';
-
-const Container = styled.div`
-  min-height: 100vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-direction: column;
-`;
-
-const Contents = styled.div`
-  display: flex;
-  background-color: #fff;
-  flex-direction: column;
-  padding: 20px;
-  boarder-radius: 8px;
-  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.2);
-`;
-
-const InputContainer = styled.div`
-  display: flex;
-`;
-
-const ToDoListContainer = styled.div`
-  min-width: 350px;
-  height: 400px;
-  overflow-y: scroll;
-  border: 1px solid #bdbdbd;
-  margin-bottom: 20px;
-`;
+import { DataView, InputContainer } from 'components';
+import { useState } from 'react';
 
 function App() {
-  const [toDo, setToDo] = useState('');
-  const [toDoList, setToDoList] = useState<string[]>([]);
+  const [toDoList, setToDoList] = useState(['리액트 공부하기', '지아님 좋아하기', '현아님 꼬시기']);
 
-  const addToDo = (): void => {
-    if (toDo) {
-      setToDoList([...toDoList, toDo]);
-      setToDo('');
-    }
+  const onDelete = (todo: string) => {
+    setToDoList(toDoList.filter((item) => item !== todo));
   };
 
-  const deleteToDo = (index: number): void => {
-    let list = [...toDoList];
-    list.splice(index, 1);
-    setToDoList(list);
+  const onAdd = (toDo: string) => {
+    setToDoList([...toDoList, toDo]);
   };
 
   return (
     <Container>
-      <Contents>
-        <ToDoListContainer data-testid="toDoList">
-          {toDoList.map((item, index) => (
-            <ToDoItem key={index} label={item} onDelete={() => deleteToDo(index)} />
-          ))}
-        </ToDoListContainer>
-        <InputContainer>
-          <Input
-            value={toDo}
-            placeholder="할 일을 입력해 주세요"
-            onChange={(text) => setToDo(text)}
-          />
-          <Button label="Add" onClick={addToDo} />
-        </InputContainer>
-      </Contents>
+      <DataView toDoList={toDoList} onDelete={onDelete} />
+      <InputContainer onAdd={onAdd} />
     </Container>
   );
 }
+
+const Container = styled.div`
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: #eee;
+`;
 
 export default App;
