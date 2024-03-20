@@ -1,55 +1,52 @@
-import styled from 'styled-components';
-import { useState } from 'react';
-import { ToDoListContextProvider } from 'contexts';
-import { Route, Routes } from 'react-router-dom';
-import { DataView, ToDoInput } from 'pages';
-import { Header } from 'components';
+import React, { useEffect, useState } from 'react';
+import styled from '@emotion/styled';
+import { BlogPost, Button, Form, Header } from 'components';
 
-function App() {
-  const [toDoList, setToDoList] = useState(['리액트 공부하기', '지아님 좋아하기', '현아님 꼬시기']);
+interface Post {
+  readonly id: number;
+  readonly userId: number;
+  readonly title: string;
+  readonly body: string;
+}
 
-  const onDelete = (todo: string) => {
-    setToDoList(toDoList.filter((item) => item !== todo));
-  };
+const App = () => {
+  const [posts, setPosts] = useState<ReadonlyArray<Post>>([]);
+  const [showForm, setShowForm] = useState(false);
 
-  const onAdd = (toDo: string) => {
-    setToDoList([...toDoList, toDo]);
-  };
+  useEffect(() => {
+    fetch('https://jsonplaceholder.typicode.com/posts')
+      .then((response) => response.json())
+      .then((json) => setPosts(json))
+      .catch((err) => console.error(err));
+  }, []);
 
   return (
     <Container>
-      <ToDoListContextProvider>
-        <Header />
-        <Routes>
-          <Route path="/" element={<DataView />} />
-          <Route path="/add" element={<ToDoInput />} />
-          <Route
-            path="*"
-            element={
-              <NotFound>
-                404
-                <br />
-                NOT FOUND
-              </NotFound>
-            }
-          />
-        </Routes>
-      </ToDoListContextProvider>
+      <Header />
+      {posts.map((post) => (
+        <BlogPost key={post.id} title={post.title} body={post.body} />
+      ))}
+      <ButtonContainer>
+        <Button label="등록" onClick={() => setShowForm(true)} />
+      </ButtonContainer>
+      {showForm && <Form onClose={() => setShowForm(false)} />}
     </Container>
   );
-}
+};
 
 const Container = styled.div`
   height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
-  justify-content: center;
   background-color: #eee;
+  overflow: scroll;
 `;
 
-const NotFound = styled.div`
-  text-align: center;
+const ButtonContainer = styled.div`
+  position: absolute;
+  right: 40px;
+  bottom: 40px;
 `;
 
 export default App;
