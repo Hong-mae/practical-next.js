@@ -6,16 +6,22 @@ import { Button } from '.';
 const meta: Meta<typeof Button> = {
   title: 'Atoms/Button',
   component: Button,
-  args: {
-    onClick: fn(),
-  },
+  args: { onClick: fn() },
+  //   tags: ['autodocs'],
 };
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
-export const Default: Story = {
+export const DeleteButton: Story = {
   args: {
-    label: 'Button',
+    label: '삭제',
+  },
+};
+
+export const AddButton: Story = {
+  args: {
+    label: '추가',
+    color: '#304ffe',
   },
 };

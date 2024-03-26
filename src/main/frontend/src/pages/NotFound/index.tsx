@@ -1,13 +1,12 @@
 import React from 'react';
 import styled from '@emotion/styled';
-import { Title } from 'components/atoms/Title';
-import { Counter } from 'components/organisms/Counter';
 
-export const CounterApp = () => {
+export const NotFound = () => {
   return (
     <Container>
-      <Title title="Counter App" />
-      <Counter />
+      404
+      <br />
+      NOT FOUND
     </Container>
   );
 };
@@ -18,4 +17,6 @@ const Container = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  text-align: center;
+  background-color: #eee;
 `;

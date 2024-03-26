@@ -1,18 +1,17 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Count } from '.';
+import { Label } from '.';
 
-const meta = {
-  title: 'Atoms/Count',
-  component: Count,
-} satisfies Meta<typeof Count>;
-
+const meta: Meta<typeof Label> = {
+  title: 'Atoms/Label',
+  component: Label,
+};
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    value: 0,
+    label: '리액트 공부하기',
   },
 };

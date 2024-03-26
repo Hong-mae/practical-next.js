@@ -1,18 +1,17 @@
 import { Meta, StoryObj } from '@storybook/react';
 
-import { Title } from '.';
+import { PageTitle } from '.';
 
-const meta = {
-  title: 'Atoms/Title',
-  component: Title,
-} satisfies Meta<typeof Title>;
-
+const meta: Meta<typeof PageTitle> = {
+  title: 'Atoms/PageTitle',
+  component: PageTitle,
+};
 export default meta;
 
 type Story = StoryObj<typeof meta>;
 
 export const Default: Story = {
   args: {
-    title: 'Counter App',
+    title: '할 일 목록',
   },
 };
