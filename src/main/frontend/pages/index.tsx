@@ -1,24 +1,27 @@
-import Widget from "@/components/Widget";
-import Head from "next/head";
-import Link from "next/link";
-import React from "react";
+import ProductCard from "@/components/ProductCard";
+import graphql from "@/lib/graphql";
+import getAllProducts from "@/lib/graphql/queries/getAllProducts";
+import { Grid } from "@chakra-ui/react";
 
-const IndexPage = () => {
+export const getStaticProps = async () => {
+  const { products } = await graphql.request(getAllProducts);
+
+  return {
+    revalidate: 60,
+    props: {
+      products,
+    },
+  };
+};
+
+const Home = (props: unknown) => {
   return (
-    <>
-      <Head>
-        <title>Welcome to my Next.js website</title>
-      </Head>
-      <div>
-        <Link href="/about" passHref>
-          About us
-        </Link>
-      </div>
-      <div>
-        <Widget pageName="index" />
-      </div>
-    </>
+    <Grid gridTemplateColumns={"repeat(4, 1fr)"} gap={"5"}>
+      {props.products.map((product: unknown) => (
+        <ProductCard key={product.id} {...product} />
+      ))}
+    </Grid>
   );
 };
 
-export default IndexPage;
+export default Home;

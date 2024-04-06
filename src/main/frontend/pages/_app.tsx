@@ -1,39 +1,23 @@
-import Navbar from "@/components/Navbar";
-import ThemeContext from "@/components/themeContext";
 import "@/styles/globals.css";
 import type { AppProps } from "next/app";
+import { ChakraProvider, Box, Flex } from "@chakra-ui/react";
+import NavBar from "@/components/Navbar";
 import { useState } from "react";
-
-const themes: any = {
-  dark: {
-    background: "black",
-    color: "white",
-  },
-  light: {
-    background: "white",
-    color: "black",
-  },
-};
+import CartContext from "@/lib/context/Cart";
 
 export default function App({ Component, pageProps }: AppProps) {
-  const [theme, setTheme] = useState("light");
-
-  const toggleTheme = (): void => {
-    setTheme(theme === "dark" ? "light" : "dark");
-  };
-
+  const [items, setItems] = useState({});
+  // return <Component {...pageProps} />;
   return (
-    <ThemeContext.Provider value={{ theme, toggleTheme }}>
-      <div
-        style={{
-          width: "100%",
-          minHeight: "100vh",
-          ...themes[theme],
-        }}
-      >
-        <Navbar />
-        <Component {...pageProps} />
-      </div>
-    </ThemeContext.Provider>
+    <ChakraProvider>
+      <CartContext.Provider value={{ items, setItems }}>
+        <Flex w="full" minH={"100vh"} bgColor={"gray.100"}>
+          <NavBar />
+          <Box maxW={"70vw"} m={"auto"}>
+            <Component {...pageProps} />
+          </Box>
+        </Flex>
+      </CartContext.Provider>
+    </ChakraProvider>
   );
 }
